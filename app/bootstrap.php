@@ -1,7 +1,7 @@
 <?php
 
 use App\Core\App;
-use App\Core\Container;
+use RayBlair06\Core\Container;
 use App\Core\Database;
 use App\Core\Request;
 use App\Core\Response;

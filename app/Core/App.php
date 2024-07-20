@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use Closure;
+use RayBlair06\Core\Container;
 
 final class App
 {

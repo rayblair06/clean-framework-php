@@ -5,6 +5,7 @@
   "license": "MIT",
   "require": {
     "php": "~8.3",
+    "rayblair06/core": "*",
     "filp/whoops": "^2.14",
     "friendsofphp/php-cs-fixer": "^3.13",
     "guzzlehttp/guzzle": "^7.0",
@@ -18,6 +19,12 @@
     "phpunit/phpunit": "^9.",
     "symfony/var-dumper": "^6.2"
   },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "./packages/core"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "App\\": "app/"

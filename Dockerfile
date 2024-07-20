@@ -3,6 +3,9 @@ FROM composer:2.2 as builder
 
 WORKDIR /app
 
+# Copy local packages for composer
+COPY ./packages/ ./packages/
+
 # Copying only the composer files first to leverage Docker cache
 COPY composer.json composer.lock ./
 

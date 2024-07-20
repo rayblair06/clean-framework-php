@@ -1,0 +1,46 @@
+{
+    "name": "rayblair06/core",
+    "description": "PHP Framework Core",
+    "keywords": [
+        ":vendor_name",
+        ":package_slug"
+    ],
+    "homepage": "https://github.com/rayblair06/core",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ray Blair",
+            "email": "rayblair06@hotmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.13"
+    },
+    "autoload": {
+        "psr-4": {
+            "RayBlair06\\Core\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RayBlair06\\Core\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
+        "lint": "vendor/bin/php-cs-fixer",
+        "tests": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
