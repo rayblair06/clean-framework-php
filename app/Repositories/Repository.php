@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Core\Database;
+use RayBlair06\Core\Database;
 use PDOException;
 
 /**

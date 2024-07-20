@@ -1,10 +1,10 @@
 <?php
 
-use App\Core\App;
+use RayBlair06\Core\App;
 use RayBlair06\Core\Container;
-use App\Core\Database;
-use App\Core\Request;
-use App\Core\Response;
+use RayBlair06\Core\Database;
+use RayBlair06\Core\Request;
+use RayBlair06\Core\Response;
 use Twig\Environment;
 
 define('APP_START', microtime(true));

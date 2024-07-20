@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace RayBlair06\Core;
 
 use Exception;
 use PDO;

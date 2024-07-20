@@ -1,8 +1,8 @@
 <?php
 
-use App\Core\App;
-use App\Core\Response;
-use App\Core\View;
+use RayBlair06\Core\App;
+use RayBlair06\Core\Response;
+use RayBlair06\Core\View;
 
 /*
 |--------------------------------------------------------------------------

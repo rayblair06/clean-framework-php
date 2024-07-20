@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Core\App;
+use RayBlair06\Core\App;
 use App\Http\BaseController;
 use App\Services\UserService;
 

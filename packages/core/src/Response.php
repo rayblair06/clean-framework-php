@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace RayBlair06\Core;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;

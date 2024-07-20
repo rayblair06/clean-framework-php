@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace RayBlair06\Core;
 
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Core;
+namespace RayBlair06\Core;
 
 use Closure;
-use RayBlair06\Core\Container;
 
 final class App
 {
