@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace RayBlair06\Core\Database;
 
-use RayBlair06\Core\Database;
 use PDOException;
+use RayBlair06\Core\Database;
 
 /**
- * Base repository class that provides common functionality for all repositories.
+ * Infrastructure repository class that provides common functionality for all repositories.
  */
 abstract class Repository
 {

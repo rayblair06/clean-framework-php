@@ -23,7 +23,10 @@
     "autoload": {
         "psr-4": {
             "RayBlair06\\Core\\": "src"
-        }
+        },
+        "files": [
+            "src/utilities/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

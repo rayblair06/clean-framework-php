@@ -2,7 +2,6 @@
 
 use RayBlair06\Core\App;
 use RayBlair06\Core\Response;
-use RayBlair06\Core\View;
 
 /*
 |--------------------------------------------------------------------------

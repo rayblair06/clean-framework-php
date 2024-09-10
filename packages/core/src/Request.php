@@ -2,6 +2,8 @@
 
 namespace RayBlair06\Core;
 
+use RayBlair06\Core\Constants\RequestHeaders;
+use RayBlair06\Core\Constants\RequestContentType;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 final class Request extends SymfonyRequest
@@ -37,7 +39,7 @@ final class Request extends SymfonyRequest
      */
     public function isJson(): bool
     {
-        return 0 === strpos($this->headers->get('Content-Type'), 'application/json');
+        return 0 === strpos($this->headers->get(RequestHeaders::CONTENT_TYPE), RequestContentType::APPLICATION_JSON);
     }
 
     /**

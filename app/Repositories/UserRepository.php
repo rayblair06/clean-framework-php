@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use RuntimeException;
 
-class UserRepository extends Repository
+class UserRepository extends BaseRepository
 {
     /**
      * Table name
