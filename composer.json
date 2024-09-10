@@ -1,11 +1,11 @@
 {
-  "name": "rayblair06/clean-architecture-php",
+  "name": "rayblair06/velocite",
   "type": "project",
-  "description": "Clean Architecture",
+  "description": "Velocite - A fast PHP framework",
   "license": "MIT",
   "require": {
     "php": "~8.3",
-    "rayblair06/core": "*",
+    "rayblair06/core": "dev-main",
     "filp/whoops": "^2.14",
     "friendsofphp/php-cs-fixer": "^3.13",
     "guzzlehttp/guzzle": "^7.0",

@@ -1,6 +1,6 @@
-# Clean Architecture
+# Velocite
 
-This repo is an example of Clean Architecture within PHP Applications.
+Velocite - A fast PHP framework.
 
 # Requirements
 

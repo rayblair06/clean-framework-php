@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17618b6521781057d88280221543d73a",
+    "content-hash": "45ad4de50fb535c479ffc90cf8979959",
     "packages": [
         {
             "name": "cakephp/core",
@@ -1773,10 +1773,10 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/core",
-                "reference": "4dff8dfcab3ec7ce6608810d7a11206f0faf0ec3"
+                "reference": "058edd41f954aff76c0b34e752ad813e77b41b86"
             },
             "require": {
-                "php": "^8.1"
+                "php": "^8.3"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.13"
@@ -1816,7 +1816,7 @@
                     "role": "Developer"
                 }
             ],
-            "description": "PHP Framework Core",
+            "description": "Velocite - PHP Framework Core",
             "homepage": "https://github.com/rayblair06/core",
             "keywords": [
                 ":package_slug",
@@ -5945,7 +5945,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "rayblair06/core": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

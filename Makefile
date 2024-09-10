@@ -8,7 +8,7 @@ build:
 # Start our Docker Compose Containers
 PHONY: start
 start:
-	@docker-compose up -d --build app
+	@docker-compose up -d --build web
 
 # Start app container and run our database migrationsa
 PHONY: migrate
