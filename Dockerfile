@@ -1,46 +1,35 @@
-# Use a specific version of composer to ensure reproducibility
-FROM composer:2.2 as builder
+# Use the official PHP image with FPM (FastCGI Process Manager)
+FROM php:8.3-fpm
 
-WORKDIR /app
+# Install necessary PHP extensions
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Copy local packages for composer
-COPY ./packages/ ./packages/
+# Install Git we'll need it for Composer
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git
 
-# Copying only the composer files first to leverage Docker cache
-COPY composer.json composer.lock ./
+# Install Composer
+COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
 
-# Install composer dependencies, skipping scripts to speed up build and avoid potential security risks
-RUN composer install --ignore-platform-reqs --no-scripts --no-progress --no-ansi --no-dev
-
-# Copy the rest of the application code
-COPY . .
-
-# Use a specific version of the PHP image for consistency
-FROM php:8.3-apache
-
-# Combine RUN commands to reduce the number of layers and overall size
-RUN docker-php-ext-install mysqli pdo pdo_mysql && \
-    docker-php-ext-enable mysqli pdo pdo_mysql && \
-    a2enmod rewrite
-
-# Consider adding any required custom PHP configuration
-# COPY ./docker/php/php.ini /usr/local/etc/php/
-
-# Apache configuration
-COPY ./docker/apache/000-default.conf /etc/apache2/sites-enabled/000-default.conf
-
-# Copy the application code with installed dependencies
-COPY --from=builder /app /var/www/html
-
-# Correct ownership to the Apache user and group
-# This may vary depending on your base image; www-data is typical for Apache on Debian-based images
-RUN chown -R www-data:www-data /var/www/html
-
-# Optionally, specify a custom entrypoint or CMD if your application requires initialization scripts
-
+# Set the working directory in the container
 WORKDIR /var/www/html
 
-# Expose port 80 is optional since the base image already exposes it
-# EXPOSE 80
+# Copy the application code to the working directory
+COPY . /var/www/html
 
-# The base PHP Apache image uses Apache as the default command, so no need to re-specify CMD unless customizing
+# Install Composer dependencies with optimized options for production
+RUN composer install \
+    --ignore-platform-reqs \
+    --no-scripts \
+    --no-progress \
+    --no-ansi \
+    --no-dev
+
+# Set proper permissions for the web server
+RUN chown -R www-data:www-data /var/www/html
+
+# Expose port 9000 for PHP-FPM
+EXPOSE 9000
+
+# Start PHP-FPM
+CMD ["php-fpm"]
