@@ -2,9 +2,16 @@ name: Quality Checks
 
 on:
   push:
-    branches: ["main"]
+    branches: 
+      - main
+      - develop
+      - feature/*
+
   pull_request:
-    branches: ["main"]
+    branches:
+      - main
+      - develop
+      - feature/*
 
 env:
   PHP_VERSION: "8.3"
@@ -13,8 +20,10 @@ jobs:
   setup:
     name: Setup Environment
     runs-on: ubuntu-latest
+
     outputs:
-      composer-cache-dir: ${{ steps.composer-cache.outputs.dir }}
+      composer-cache-dir: ${{ env.COMPOSER_CACHE_DIR }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -24,18 +33,20 @@ jobs:
         with:
           php-version: ${{ env.PHP_VERSION }}
           tools: composer:v2
-          coverage: none
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Validate Composer Files
+        run: composer validate --strict
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
+      - name: Get Composer Cache Directory
+        id: get-composer-cache
+        run: echo "COMPOSER_CACHE_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
+
+      - name: Cache Composer Dependencies
+        uses: actions/cache@v4
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: php-${{ env.PHP_VERSION }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: php-${{ env.PHP_VERSION }}-composer-
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
@@ -43,33 +54,50 @@ jobs:
   test-and-lint:
     needs: setup
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         task: [test, lint]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Composer Cache
-        uses: actions/cache@v3
+      - name: Install PHP v${{ env.PHP_VERSION }}
+        uses: shivammathur/setup-php@v2
         with:
-          path: ${{ needs.setup.outputs.composer-cache-dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
+          php-version: ${{ env.PHP_VERSION }}
+          tools: composer:v2
+
+      - name: Validate Composer Files
+        run: composer validate --strict
+
+      - name: Get Composer Cache Directory
+        id: get-composer-cache
+        run: echo "COMPOSER_CACHE_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
+
+      - name: Cache Composer Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.COMPOSER_CACHE_DIR }}
+          key: php-${{ env.PHP_VERSION }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: php-${{ env.PHP_VERSION }}-composer-
 
       - name: Prepare Application
         run: cp .env.ci .env
 
-      - name: Start Application
-        run: |
-          make build && make start
-          sleep 30s # Wait for services to initialize
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Setup Database
         if: matrix.task == 'test'
         run: |
-          make migrate
-          make seed
+          vendor/bin/phinx migrate
+          vendor/bin/phinx seed:run
+
+      - name: Serve application
+        if: matrix.task == 'test'
+        run: php -S 127.0.0.1:80
 
       - name: Run Tests
         if: matrix.task == 'test'
