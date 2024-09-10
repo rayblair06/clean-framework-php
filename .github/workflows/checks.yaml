@@ -64,17 +64,19 @@ jobs:
         image: mysql:8.3
         env:
           MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_ROOT_HOST: "%"
           MYSQL_DATABASE: ${{ env.DB_DATABASE }}
           MYSQL_USER: ${{ env.DB_USERNAME }}
           MYSQL_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
         ports:
           - 3306:3306
         # Give MySQL time to be ready
         options: >-
-          --health-cmd="mysqladmin ping --silent"
+          --health-cmd="mysqladmin ping --silent -p${{ DB_PASSWORD }}"
           --health-interval=10s
-          --health-timeout=5s
           --health-retries=3
+          --health-timeout=5s
 
     steps:
       - name: Checkout
